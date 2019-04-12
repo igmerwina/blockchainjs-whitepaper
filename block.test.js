@@ -2,6 +2,7 @@
 
 const Block = require('./block')
 
+// testing Block
 describe('Block', () => {
     // deklarasi variable biar bisa dipake di it
     let data, lastBlock, block 
