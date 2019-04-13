@@ -37,6 +37,7 @@ class Blockchain {
 
     }
 
+    // !-- Kurang paham sama fungsi ini 
     replaceChain(newChain) {
         // make sure it has valid chain 
         // Kalau < berarti bner
@@ -46,7 +47,7 @@ class Blockchain {
         } else if (!this.isValidChain(newChain)){
             console.log('The receive chain is not valid')
             return
-        }
+        }  
 
         console.log('Replacing blockchain with the new chain')
         this.chain = newChain
