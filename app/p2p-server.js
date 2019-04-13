@@ -8,7 +8,7 @@ const peers = process.env.PEERS ? process.env.PEERS.split(',') : []
 class p2pServer {
   constructor(blockchain){
     this.blockchain = blockchain
-    this.socket = []
+    this.sockets = []
   }
 
   listen(){
@@ -31,20 +31,30 @@ class p2pServer {
 
 
   connectSocket(socket){
-    this.socket.push(socket)
+    this.sockets.push(socket)
     console.log('Socket connected')
 
     this.messageHandler(socket)
 
-    socket.send(JSON.stringify(this.blockchain.chain))
+    this.sendChain(socket)
   }
 
   // handling message 
   messageHandler(socket){
     socket.on('message', message => {
       const msg_data = JSON.parse(message)
-      console.log('data: ', msg_data)
+      // console.log('data: ', msg_data)
+
+      this.blockchain.replaceChain(msg_data)
     })
+  }
+
+  sendChain(socket){
+    socket.send(JSON.stringify(this.blockchain.chain))
+  }
+
+  syncChains(){
+    this.sockets.forEach(socket => this.sendChain(socket))
   }
 }
 
