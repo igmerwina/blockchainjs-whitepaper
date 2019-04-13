@@ -1,13 +1,12 @@
 // auto unit test with jest 
 
 const Block = require('./block')
-const { DIFFICULTY } = require('../config')
 
-// testing Block
+// jest parameter
 describe('Block', () => {
     // deklarasi variable biar bisa dipake di it
     let data, lastBlock, block 
-    
+    // jest parameter untuk forEach
     beforeEach(() => {
         data = 'bar'
         lastBlock = Block.genesis()
@@ -19,13 +18,27 @@ describe('Block', () => {
         expect(block.data).toEqual(data)
     })
 
+    // testing cek hash data
     it('sets the `lastHash` to match the hash of the last block input', () => {
         expect(block.lastHash).toEqual(lastBlock.hash)        
     })
 
     // testing nonce hash
     it('generate the hash that matches the difficulty', () => {
-        expect(block.hash.substring(0, DIFFICULTY)).toEqual('0'.repeat(DIFFICULTY))        
-        console.log(block.toString())
+        expect(block.hash.substring(0, block.difficulty))
+            .toEqual('0'.repeat(block.difficulty))        
     })
+
+    // testing lower the difficulty for slowly mined blocks
+    it('lower difficulty for slowly mined blocks', () => {
+        expect(Block.adjustDifficulty(block, block.timestamp+360000))
+            .toEqual(block.difficulty-1)
+    })
+
+    // testing raise the difficulty for slowly mined blocks
+    it('lower difficulty for slowly mined blocks', () => {
+        expect(Block.adjustDifficulty(block, block.timestamp+1 ))
+            .toEqual(block.difficulty+1)
+    })
+
 })

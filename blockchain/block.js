@@ -69,7 +69,7 @@ class Block {
         let { difficulty } = lastBlock
         // ternary expresion to adjust dificulty
         difficulty = lastBlock.timestamp + MINE_RATE > currentTime ? difficulty + 1 : difficulty - 1
-        return difficulty
+        return difficulty    
     }
 }
 

@@ -1,6 +1,12 @@
-const Block = require('./block')
+// file untuk nguji aplikasi secara keseluruhan
+// dilakukan setelah unit test 
 
-const fooBlock = Block.mineBlock(Block.genesis(), 'foo')
+const Blockchain = require('./blockchain')
 
-console.log(fooBlock.toString())
+const bc = new Blockchain()
 
+for(let i=0; i<10; i++){
+  console.log(bc.addBlock(`foo ${i}`).toString())
+}
+
+console.log("test pass")
