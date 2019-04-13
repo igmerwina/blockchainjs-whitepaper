@@ -1,5 +1,5 @@
 const SHA256 = require('crypto-js/sha256')
-const DIFFICULTY = 2 // mining difficulty, biar gampang proses 2 dlu
+const { DIFFICULTY } = require('../config') // mining difficulty, biar gampang proses 2 dlu
 
 class Block {
     constructor(timestamp, lastHash, hash, data, nonce){
