@@ -1,5 +1,3 @@
-// blockchain.js
-
 const Block = require('./block')
 
 class Blockchain {
