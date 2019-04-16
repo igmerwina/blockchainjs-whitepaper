@@ -34,7 +34,21 @@ describe('Transaction', () =>{
         expect(transaction.input.amount).toEqual(wallet.balance)
     })
 
-    // ---- beda kondisi: kondisi kalau amount tx > wallet balance
+    // test #4 
+    it('validates a valid transaction', () => {
+        expect(Transaction.verifyTransaction(transaction)).toBe(true)
+    })
+
+    // test #5
+    it('invalidates a corrupt transaction', () => {
+        //corruptig the transaction 
+        // by taking the 1st output & changinng to something unseen 
+        transaction.outputs[0].amount = 50000
+        expect(Transaction.verifyTransaction(transaction)).toBe(false) 
+    })
+
+
+    // ---- beda kondisi: kondisi kalau amount tx > wallet balance ----
     describe('transacting with an amount that exceed the balance', () => {
         beforeEach(() => {
             amount = 50000
