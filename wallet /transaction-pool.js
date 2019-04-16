@@ -9,7 +9,7 @@ class TransactionPool {
 
         if (transactionWithId){
             // change the element in array 
-            this.transactions[this.indexOf(transactionWithId)] = transaction 
+            this.transactions[this.transactions.indexOf(transactionWithId)] = transaction 
         } else {
             this.transactions.push(transaction)
         }
