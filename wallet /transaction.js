@@ -48,6 +48,7 @@ class Transaction{
         return transaction
     }
 
+    // buat input dalam transaksi, tapi jadi signature
     static signTransaction(transaction, senderWallet){
         transaction.input = {
             timestamp: Date.now(),
