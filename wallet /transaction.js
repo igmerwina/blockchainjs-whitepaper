@@ -15,7 +15,7 @@ class Transaction{
         
         // check the balance di wallet bisa gak dipake buat transaksi
         if(amount > senderWallet.balance){
-            console.log(`Amount: ${amount} exceeds balance`)
+            console.log(`Amount: ${amount} exceeds balance`) // print ke terminal
             return
         }
         // outputs yang dicatet dari proses transaksi: 
