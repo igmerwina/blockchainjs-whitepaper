@@ -29,8 +29,12 @@ describe('Transaction', () =>{
             .toEqual(amount)
     })
 
+    // test #3 inputs the balance of the wallet
+    it('inputs the balance of the wallet', () => {
+        expect(transaction.input.amount).toEqual(wallet.balance)
+    })
 
-    // test beda kondisi: kondisi kalau amount tx > wallet balance
+    // ---- beda kondisi: kondisi kalau amount tx > wallet balance
     describe('transacting with an amount that exceed the balance', () => {
         beforeEach(() => {
             amount = 50000
