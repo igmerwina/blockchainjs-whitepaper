@@ -14,6 +14,12 @@ class Wallet{
             balance  : ${this.balance}    
         `
     }
+
+    // buat signature dari transaksi 
+    sign(dataHash){
+        return this.keyPair.sign(dataHash)
+        
+    }
 }
 
 module.exports = Wallet
