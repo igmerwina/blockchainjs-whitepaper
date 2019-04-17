@@ -2,13 +2,15 @@
 
 const Wallet = require('./index')
 const TransactionPool = require('./transaction-pool')
+const Blockchain = require('../blockchain')
 
 describe('Wallet', () => {
-    let wallet, tp
+    let wallet, tp, bc
 
     beforeEach(() => {
         wallet = new Wallet()
         tp = new TransactionPool()
+        bc = new Blockchain()
     })
 
     // assume wallet is creating a transaction
@@ -18,12 +20,12 @@ describe('Wallet', () => {
         beforeEach(() => {
             sendAmount = 50
             recipient = 'r4nd0m-4dsr3ss'
-            transaction = wallet.createTransaction(recipient, sendAmount, tp)
+            transaction = wallet.createTransaction(recipient, sendAmount, bc, tp)
         })
 
         describe('and doing the same transaction', () => {
             beforeEach(() => {
-                wallet.createTransaction(recipient, sendAmount, tp)
+                wallet.createTransaction(recipient, sendAmount, bc, tp)
             })
 
             // bukti kalau transaksi yang sama dilakuin 2 kali

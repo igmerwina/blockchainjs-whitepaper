@@ -22,7 +22,10 @@ class Wallet{
         
     }
 
-    createTransaction(recipient, amount, transactionPool){
+    createTransaction(recipient, amount, blockchain, transactionPool){
+        // calculate the balance 
+        this.balance = this.calculateBalance(blockchain)
+
         if (amount > this.balance){
             console.log(`Amount: ${amount} exceed the current balance: ${this.balance}`)
             return
@@ -50,8 +53,8 @@ class Wallet{
         let transactions = []
 
         // blockchain data dimasuk ke array of transaction
-        blockchain.chain.foreach(block => block.data.forEach(transaction => {
-            transaction.push(transaction)
+        blockchain.chain.forEach(block => block.data.forEach(transaction => {
+            transactions.push(transaction)
         }))
         // transaksi dalam array tsb dimasukin ke walletInput
         const walletInputTs = transactions
@@ -71,10 +74,12 @@ class Wallet{
 
         // kalkulasi balance dengan transaksi yang paling trakhir
         transactions.forEach(transaction => {
-            if (transactions.input.timestamp > startTime) {
-                transaction.output.find(output => output.address === this.publicKey){
-                    balance += output.amount
-                }
+            if (transaction.input.timestamp > startTime) {
+                transaction.output.find(output => {
+                    if (output.address === this.publicKey){
+                        balance += output.amount
+                    } 
+                })
             }
         })
 
