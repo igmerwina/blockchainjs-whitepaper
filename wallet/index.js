@@ -43,6 +43,44 @@ class Wallet{
         return transaction
     }
 
+    // function to calculate the final balance 
+    // kurang paham sama ni fungsi :hmmm
+    calculateBalance(blockchain){
+        let balance = this.balance
+        let transactions = []
+
+        // blockchain data dimasuk ke array of transaction
+        blockchain.chain.foreach(block => block.data.forEach(transaction => {
+            transaction.push(transaction)
+        }))
+        // transaksi dalam array tsb dimasukin ke walletInput
+        const walletInputTs = transactions
+            .filter(transaction => transaction.input.address === this.publicKey)
+        
+        let startTime = 0
+
+        // dicari transaksi yang paling recent
+        if (walletInputTs.length > 0){
+            const recentInputT = walletInputTs.reduce(
+                (prev, current) => prev.input.timestamp > current.input.timestamp ? prev : current
+            )
+
+            balance =  recentInputT.outputs.find(output => output.address === this.publicKey).amount
+            startTime = recentInputT.input.timestamp
+        }
+
+        // kalkulasi balance dengan transaksi yang paling trakhir
+        transactions.forEach(transaction => {
+            if (transactions.input.timestamp > startTime) {
+                transaction.output.find(output => output.address === this.publicKey){
+                    balance += output.amount
+                }
+            }
+        })
+
+        return balance
+    }
+
     static blockchainWallet(){
         const blockchainWallet = new this()
         blockchainWallet.address = 'blockchain-wallet'
