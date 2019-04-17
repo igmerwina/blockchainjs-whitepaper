@@ -5,6 +5,7 @@ const Blockchain = require('../blockchain')
 const P2pServer = require('./p2p-server') 
 const Wallet = require('../wallet')
 const TransactionPool = require('../wallet/transaction-pool')
+const Miner = require('./miner')
 
 const HTTP_PORT = process.env.HTTP_PORT || 3001 // biar bisa manggil banyak port
 
@@ -13,6 +14,7 @@ const bc = new Blockchain()
 const wallet = new Wallet()
 const tp = new TransactionPool()
 const p2p = new P2pServer(bc, tp)
+const miner = new Miner(bc, tp, wallet, p2p)
 
 app.use(bp.json()) // allow us to receive json on post request
 
@@ -40,6 +42,16 @@ app.post('/transac', (req, res) => {
   const transaction = wallet.createTransaction(recipient, amount, tp)
   p2p.broadcastTransaction(transaction)
   res.redirect('/transactions') 
+})
+
+
+// endpoint to mine transaction
+app.get('/mine-transactions', (req, res) => {
+  const block = miner.mine()
+  console.log(`New block added: ${block.toString()}`)
+  res.redirect('/blocks')
+
+
 })
 
 // enpoint to see public key of user
