@@ -40,6 +40,12 @@ class TransactionPool {
             return transaction
         })
     }
+
+    // clear out the transaction pool
+    // karena transaction pool uda masuk ke mine
+    clear(){
+        this.transactions = []
+    }
 }
 
 module.exports = TransactionPool
