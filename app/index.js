@@ -12,7 +12,7 @@ const app = express()
 const bc = new Blockchain()
 const wallet = new Wallet()
 const tp = new TransactionPool()
-const p2p = new p2pServer(bc)
+const p2p = new p2pServer(bc, tp)
 
 app.use(bp.json()) // allow us to receive json on post request
 
