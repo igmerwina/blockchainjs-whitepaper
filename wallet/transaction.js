@@ -2,7 +2,7 @@
 // kaya transfer uang, dsb 
 
 const ChainUtil = require('../chain-util')
-
+ 
 class Transaction{
     constructor(){
         this.id = ChainUtil.id()

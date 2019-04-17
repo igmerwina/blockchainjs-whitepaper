@@ -9,7 +9,7 @@ const MESSAGE_TYPES = {
   transaction: 'TRANSACTION'
 }
 
-class p2pServer {
+class P2pServer {
   constructor(blockchain, transactionPool){
     this.blockchain = blockchain
     this.transactionPool = transactionPool
@@ -47,10 +47,16 @@ class p2pServer {
   // handling message 
   messageHandler(socket){
     socket.on('message', message => {
-      const msg_data = JSON.parse(message)
-      // console.log('data: ', msg_data)
-
-      this.blockchain.replaceChain(msg_data)
+      const data = JSON.parse(message)
+      // console.log('data: ', data)
+      switch(data.type){
+        case MESSAGE_TYPES.chain:
+          this.blockchain.replaceChain(data.chain)
+          break
+        case MESSAGE_TYPES.transaction: 
+          this.transactionPool.updateOrAddTransaction(data.transaction)
+          break
+      }
     })
   }
 
@@ -65,7 +71,7 @@ class p2pServer {
     socket.send(JSON.stringify({
       type: MESSAGE_TYPES.transaction,
       transaction
-    }))  
+    }))   
   }
 
   syncChains(){
@@ -73,9 +79,9 @@ class p2pServer {
   }
 
   broadcastTransaction(transaction){
-    this.sockets.forEach(socket => this.sendTransaction(socket))
+    this.sockets.forEach(socket =>  this.sendTransaction(socket, transaction))
   }
 }
 
  
-module.exports = p2pServer
+module.exports = P2pServer

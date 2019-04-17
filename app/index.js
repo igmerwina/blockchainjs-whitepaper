@@ -2,7 +2,7 @@ const express = require('express')
 const bp = require('body-parser')
 
 const Blockchain = require('../blockchain')
-const p2pServer = require('./p2p-server') 
+const P2pServer = require('./p2p-server') 
 const Wallet = require('../wallet')
 const TransactionPool = require('../wallet/transaction-pool')
 
@@ -12,7 +12,7 @@ const app = express()
 const bc = new Blockchain()
 const wallet = new Wallet()
 const tp = new TransactionPool()
-const p2p = new p2pServer(bc, tp)
+const p2p = new P2pServer(bc, tp)
 
 app.use(bp.json()) // allow us to receive json on post request
 
@@ -38,8 +38,14 @@ app.get('/transactions', (req, res) => {
 app.post('/transac', (req, res) => {
   const { recipient, amount } = req.body
   const transaction = wallet.createTransaction(recipient, amount, tp)
+  p2p.broadcastTransaction(transaction)
   res.redirect('/transactions') 
 })
 
+// enpoint to see public key of user
+app.get('/public-key', (req, res) => {
+  res.json({ publicKey: wallet.publicKey })
+})
+
 app.listen(HTTP_PORT, () => console.log(`jalan di http://localhost:${HTTP_PORT}`))
-p2p.listen()
+p2p.listen()  

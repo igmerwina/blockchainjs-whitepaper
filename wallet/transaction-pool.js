@@ -3,7 +3,7 @@ class TransactionPool {
         this.transactions = [] // collection of transaction 
     }
 
-    updateOrAddTransaction(transaction){
+    updateOrAddTransaction(transaction){  
         // check transaksi uda ada / terjadi apa belum 
         let transactionWithId = this.transactions.find(t => t.id === transaction.id)
 
