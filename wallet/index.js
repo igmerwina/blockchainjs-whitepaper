@@ -68,14 +68,14 @@ class Wallet{
                 (prev, current) => prev.input.timestamp > current.input.timestamp ? prev : current
             )
 
-            balance =  recentInputT.outputs.find(output => output.address === this.publicKey).amount
+            balance = recentInputT.outputs.find(output => output.address === this.publicKey).amount
             startTime = recentInputT.input.timestamp
         }
 
         // kalkulasi balance dengan transaksi yang paling trakhir
         transactions.forEach(transaction => {
             if (transaction.input.timestamp > startTime) {
-                transaction.output.find(output => {
+                transaction.outputs.find(output => {
                     if (output.address === this.publicKey){
                         balance += output.amount
                     } 
