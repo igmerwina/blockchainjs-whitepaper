@@ -34,5 +34,12 @@ app.get('/transactions', (req, res) => {
   res.json(tp.transactions)
 })
 
+// add transaction to transaction pool 
+app.post('/transac', (req, res) => {
+  const { recipient, amount } = req.body
+  const transaction = wallet.createTransaction(recipient, amount, tp)
+  res.redirect('/transactions') 
+})
+
 app.listen(HTTP_PORT, () => console.log(`jalan di http://localhost:${HTTP_PORT}`))
 p2p.listen()
