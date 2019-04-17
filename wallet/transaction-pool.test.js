@@ -11,8 +11,7 @@ describe('TransactionPool', () => {
     beforeEach(() => {
         tp = new TransactionPool()
         wallet = new Wallet()
-        transaction = Transaction.newTransaction(wallet, 'r4nd0m-4ddr355', 30)
-        tp.updateOrAddTransaction(transaction)
+        transaction = wallet.createTransaction('r4nd0m-4ddr355', 30, tp)
     })
 
     // test #1: add transaction to the pool
@@ -30,5 +29,34 @@ describe('TransactionPool', () => {
 
         expect(JSON.stringify(tp.transactions.find(t => t.id === newTransaction.id)))
             .not.toEqual(oldTransaction)
+    })
+
+    // --- kondisi: gabunging transaksi corrup & valid --- 
+    describe('mixing valid and corrupt transaction', () => {
+        let validTransactions
+
+        beforeEach(() => {
+            validTransactions = [...tp.transactions]
+            for (let i=0; i<6; i++){
+                wallet = new Wallet()
+                transaction = wallet.createTransaction('r4nd0m-4ddr355', 30, tp)
+                if (i%2==0){
+                    transaction.input.amount = 99999
+                } else {
+                    validTransactions.push(transaction)
+                }
+            }
+        })
+
+        // test #1
+        it('should shows a difference between valid and corrupt transactions', () =>{
+            expect(JSON.stringify(tp.transactions)).not.toEqual(JSON.stringify(validTransactions))
+        })
+
+        // test #2
+        it('should grabs valid transaction', () => {
+            expect(tp.validTransactions()).toEqual(validTransactions)
+        })
+
     })
 })
