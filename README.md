@@ -1,4 +1,5 @@
 # Learn blockchain based on its white paper 
+[![Status:](https://img.shields.io/badge/Status--tutorial-Done-green.svg)](#Done)
 
 Repo ini saya gunakan buat memahami blockchain pake [javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) ES6 dan beberapa library terkait
 
@@ -6,8 +7,6 @@ Sumber video dari [Build a Blockchain and a Cryptocurrency from Scratch](https:/
 
 ## Semangat Belajar!!! :fire: :fire:
 
-
-#### Status-tutorial: **DONE**
 ---
 
 Note - Add peer:
