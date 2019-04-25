@@ -42,7 +42,7 @@ describe('Transaction', () =>{
 
     // test #5
     it('invalidates a corrupt transaction', () => {
-        //corruptig the transaction 
+        // corruptig the transaction 
         // by taking the 1st output & changinng to something unseen 
         transaction.outputs[0].amount = 50000
         expect(Transaction.verifyTransaction(transaction)).toBe(false) 
